@@ -3,79 +3,219 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Register</title>
-	<link href="https://fonts.googleapis.com/css?family=Comfortaa|Roboto&display=swap" rel="stylesheet">
+	<title>Language Selector</title>
 	<style>
-		body {
+		/* Reset styles */
+		* {
 			margin: 0;
 			padding: 0;
-			font-family: 'Roboto', sans-serif;
-			background-color: #fff;
+			box-sizing: border-box;
 		}
+
+		/* Global styles */
+		body {
+			font-family: Arial, sans-serif;
+			font-size: 16px;
+			line-height: 1.5;
+			background-color: #f5f5f5;
+		}
+
 		.container {
-			max-width: 375px;
+			max-width: 1200px;
 			margin: 0 auto;
 			padding: 20px;
 		}
-		h1 {
-			font-family: 'Comfortaa', cursive;
-			font-size: 36px;
-			font-weight: 400;
-			text-align: center;
-			margin-bottom: 30px;
-			color: #000;
+
+		/* Language selector styles */
+		.lang-selector {
+			position: relative;
+			display: inline-block;
+			margin-right: 20px;
 		}
-		form {
-			background-color: #f2f2f2;
-			padding: 20px;
-			border-radius: 10px;
-			box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-		}
-		label {
-			display: block;
-			font-size: 15px;
-			font-weight: 400;
-			margin-bottom: 5px;
-			color: rgba(0, 0, 0, 0.5);
-		}
-		input[type="email"], input[type="password"], input[type="text"] {
-			display: block;
-			width: 100%;
+
+		.lang-selector__button {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
 			padding: 10px;
-			border: none;
-			border-radius: 5px;
-			margin-bottom: 20px;
 			background-color: #fff;
-			box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
-		}
-		input[type="submit"] {
-			display: block;
-			width: 100%;
-			padding: 10px;
-			border: none;
+			border: 1px solid #ccc;
 			border-radius: 5px;
-			background-color: #ff69b4;
-			color: #fff;
-			font-size: 15px;
-			font-weight: 400;
 			cursor: pointer;
-			transition: background-color 0.3s ease;
 		}
-		input[type="submit"]:hover {
-			background-color: #ff1493;
+
+		.lang-selector__button:hover {
+			background-color: #f5f5f5;
+		}
+
+		.lang-selector__button:focus {
+			outline: none;
+			box-shadow: 0 0 0 2px #007bff;
+		}
+
+		.lang-selector__icon {
+			margin-right: 10px;
+			width: 20px;
+			height: 20px;
+			background-image: url("https://www.countryflags.io/gb/flat/24.png");
+			background-repeat: no-repeat;
+			background-size: contain;
+			background-position: center;
+		}
+
+		.lang-selector__label {
+			font-weight: bold;
+			color: #333;
+		}
+
+		.lang-selector__dropdown {
+			position: absolute;
+			top: 100%;
+			left: 0;
+			display: none;
+			z-index: 1;
+			padding: 10px;
+			background-color: #fff;
+			border: 1px solid #ccc;
+			border-radius: 5px;
+			box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+		}
+
+		.lang-selector__dropdown--expanded {
+			display: block;
+		}
+
+		.lang-selector__option {
+			display: flex;
+			align-items: center;
+			padding: 5px;
+			cursor: pointer;
+		}
+
+		.lang-selector__option:hover {
+			background-color: #f5f5f5;
+		}
+
+		.lang-selector__option:focus {
+			outline: none;
+			box-shadow: 0 0 0 2px #007bff;
+		}
+
+		.lang-selector__option-icon {
+			margin-right: 10px;
+			width: 20px;
+			height: 20px;
+			background-repeat: no-repeat;
+			background-size: contain;
+			background-position: center;
+		}
+
+		.lang-selector__option-label {
+			color: #333;
+		}
+
+		/* Media queries */
+		@media screen and (max-width: 768px) {
+			.container {
+				padding: 10px;
+			}
+
+			.lang-selector {
+				margin-right: 10px;
+			}
+
+			.lang-selector__button {
+				padding: 5px;
+			}
+
+			.lang-selector__icon {
+				width: 16px;
+				height: 16px;
+			}
+
+			.lang-selector__label {
+				font-size: 14px;
+			}
+
+			.lang-selector__dropdown {
+				padding: 5px;
+			}
+
+			.lang-selector__option-icon {
+				width: 16px;
+				height: 16px;
+			}
+
+			.lang-selector__option-label {
+				font-size: 14px;
+			}
 		}
 	</style>
 </head>
 <body>
 	<div class="container">
-		<h1>Register</h1>
-		<form>
-			<label for="email">Email address</label>
-			<input type="email" id="email" name="email" required>
-			<label for="password">Create password</label>
-			<input type="password" id="password" name="password" required>
-			<input type="submit" value="Register">
-		</form>
+		<div class="lang-selector">
+			<button class="lang-selector__button" aria-haspopup="true" aria-expanded="false">
+				<span class="lang-selector__icon"></span>
+				<span class="lang-selector__label">English</span>
+				<span class="lang-selector__arrow">&#9660;</span>
+			</button>
+			<div class="lang-selector__dropdown">
+				<div class="lang-selector__option" tabindex="0">
+					<span class="lang-selector__option-icon" style="background-image: url('https://www.countryflags.io/gb/flat/24.png')"></span>
+					<span class="lang-selector__option-label">English</span>
+				</div>
+				<div class="lang-selector__option" tabindex="0">
+					<span class="lang-selector__option-icon" style="background-image: url('https://www.countryflags.io/fr/flat/24.png')"></span>
+					<span class="lang-selector__option-label">Français</span>
+				</div>
+				<div class="lang-selector__option" tabindex="0">
+					<span class="lang-selector__option-icon" style="background-image: url('https://www.countryflags.io/es/flat/24.png')"></span>
+					<span class="lang-selector__option-label">Español</span>
+				</div>
+			</div>
+		</div>
 	</div>
+
+	<script>
+		// Language selector functionality
+		const langSelectorButton = document.querySelector('.lang-selector__button');
+		const langSelectorDropdown = document.querySelector('.lang-selector__dropdown');
+
+		langSelectorButton.addEventListener('click', () => {
+			const expanded = langSelectorButton.getAttribute('aria-expanded') === 'true' || false;
+			langSelectorButton.setAttribute('aria-expanded', !expanded);
+			langSelectorDropdown.classList.toggle('lang-selector__dropdown--expanded');
+		});
+
+		langSelectorDropdown.addEventListener('keydown', (event) => {
+			if (event.key === 'Escape') {
+				langSelectorButton.focus();
+				langSelectorButton.setAttribute('aria-expanded', 'false');
+				langSelectorDropdown.classList.remove('lang-selector__dropdown--expanded');
+			}
+		});
+
+		const langSelectorOptions = document.querySelectorAll('.lang-selector__option');
+
+		langSelectorOptions.forEach((option) => {
+			option.addEventListener('click', () => {
+				const label = option.querySelector('.lang-selector__option-label').textContent;
+				const icon = option.querySelector('.lang-selector__option-icon').style.backgroundImage;
+				langSelectorButton.querySelector('.lang-selector__label').textContent = label;
+				langSelectorButton.querySelector('.lang-selector__icon').style.backgroundImage = icon;
+				langSelectorButton.focus();
+				langSelectorButton.setAttribute('aria-expanded', 'false');
+				langSelectorDropdown.classList.remove('lang-selector__dropdown--expanded');
+			});
+
+			option.addEventListener('keydown', (event) => {
+				if (event.key === 'Enter' || event.key === ' ') {
+					event.preventDefault();
+					option.click();
+				}
+			});
+		});
+	</script>
 </body>
 </html>
