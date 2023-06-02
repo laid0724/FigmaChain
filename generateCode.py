@@ -28,13 +28,17 @@ figma_doc_retreiver = index.vectorstore.as_retriever()
 # Define system and human prompt templates
 user_prompt = input("Enter your prompt: ")
 
+code_sample = """
+ADD CODE HERE
+"""
+
 system_prompt_template = """Act as senior web developer who is an expert in the Angular framework.
 Use the provided design context to create idiomatic HTML/SCSS/TypeScript code based on the user request.
 Everything must be output in one file.
 Write code that matches the Figma file nodes and metadata as exactly as you can, with the request's specifications in mind.
 Figma file nodes and metadata: {context}"""
 
-human_prompt_template = "Code this request: {user_prompt}. Ensure that the code is mobile responsive and follows modern design principles."
+human_prompt_template = 'Code this request: "{user_prompt}" using the following code sample as its basis "{code_sample}": . Ensure that the code is mobile responsive and follows modern design principles.'
 
 # Initialize the ChatOpenAI model
 gpt_model = ChatOpenAI(
@@ -42,10 +46,9 @@ gpt_model = ChatOpenAI(
 )
 
 
-# Define a function to generate code based on the input
-def generate_code(input):
+def generate_code(input_text, code_sample):
     # Get relevant nodes from the Figma document retriever
-    relevant_nodes = figma_doc_retreiver.get_relevant_documents(input)
+    relevant_nodes = figma_doc_retreiver.get_relevant_documents(input_text)
 
     # Create system and human message prompts
     system_message_prompt = SystemMessagePromptTemplate.from_template(
@@ -60,22 +63,15 @@ def generate_code(input):
     chat_prompt = ChatPromptTemplate.from_messages(conversation)
     response = gpt_model(
         chat_prompt.format_prompt(
-            context=relevant_nodes, user_prompt=user_prompt
+            context=relevant_nodes, user_prompt=input_text, code_sample=code_sample
         ).to_messages()
     )
 
     return response.content
 
 
-# # Add argument parsing to allow for command-line input
-# parser = argparse.ArgumentParser(
-#     description="Generate HTML/CSS/TypeScript code based on input."
-# )
-# parser.add_argument("input_text", type=str, help="The input text for generating code.")
-# args = parser.parse_args()
-
-# Generate the code using the input prompt
-response = generate_code(user_prompt)
+# Generate the code using the input prompt and code sample
+response = generate_code(user_prompt, code_sample)
 
 # Define the output file name
 file_name = "output.txt"
@@ -84,10 +80,3 @@ file_name = "output.txt"
 with open(file_name, "w") as file:
     file.write(response)
     print(f"Output file saved as {file_name}")
-
-# # Open the HTML file in the default web browser
-# webbrowser_open_successful = webbrowser.open(file_name)
-# if webbrowser_open_successful:
-#     print("HTML file opened successfully in the default web browser.")
-# else:
-#     print("Failed to open the HTML file in the default web browser.")
