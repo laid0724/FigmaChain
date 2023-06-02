@@ -29,9 +29,9 @@ figma_doc_retreiver = index.vectorstore.as_retriever()
 user_prompt = input("Enter your prompt: ")
 
 system_prompt_template = """Act as senior web developer who is an expert in the Angular framework.
-Use the provided design context to create idiomatic HTML/SCSS/TypeSCript code based on the user request.
+Use the provided design context to create idiomatic HTML/SCSS/TypeScript code based on the user request.
 Everything must be output in one file.
-Write code that matches the Figma file nodes and metadata as exactly as you can.
+Write code that matches the Figma file nodes and metadata as exactly as you can, with the request's specifications in mind.
 Figma file nodes and metadata: {context}"""
 
 human_prompt_template = "Code this request: {user_prompt}. Ensure that the code is mobile responsive and follows modern design principles."
